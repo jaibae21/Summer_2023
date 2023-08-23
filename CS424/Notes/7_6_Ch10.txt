@@ -1,0 +1,88 @@
+** Julia Overview ** 
+
+Similar to python in no declarations
+Strengths in math
+Tons of array operations
+shallow copy default
+== two objects same value
+=== two objects same object in memory
+dont necessairly inherit scope from caller
+Read global variables but can't change unless specify 
+Arrays better than structs
+List of libraries ok to use. Others need approval
+
+
+** Test 8, 9, 10 - emphasis on activation records and scoping
+	CH 7: type mixing, assignment mixed type, operator evaluation order, functional side effects, short circuiting, overload operators - still stick to semantics
+	
+** Ch 10: implementing subroutines
+	Semantics
+		Call and Return
+			Call
+				save execution status of current unit (module)
+					hardware state 
+				pass by value: some storage that gets paramters
+				provide return address
+				load 1st instruction
+			Return
+				complete any out mech of paramters
+				function: copy of return value
+				resotre execution state of caller
+				load return instruction
+		Activation Record: data structure that hold call and return work
+				drawn bottom up cause goes on stack
+				makes the scoping work at runtime
+			status + return address (everything needed to return, fixed size) 
+			static link (not there if static scoping not used) (points to who defined it, ) 
+			Dynamic link ( points to beginning of activation record that called it, have to keep up with it bc not fixed sizes, can be an offset but not typically) 
+				both links are fixed, point to other addresses
+			Parameters
+			local
+		Call Chain
+			ex. java call stack when you "crash" program
+	Program Stack
+		Stores activation record
+		
+		Ex.
+		Call func1->fun2->fun3
+				(0) var global (added for 432)
+				(0) def func1()
+					(1) int a , c (c added for 432 ex)
+					(1) def fun2()
+						(2) int b
+						(2) b = a (added for shorter version of 432 ex)
+					(1) def fun3(q)	(q also added for 432)
+						(2) int x
+						(2) x = a * 3
+							print global ( difference of 2, defined in 0, but used in 2)
+				the "top" moves to the next beginning of a function call
+					static links used to resolve static scoping
+		page 432 in book example
+			simiplier version (used prev ex)
+				new scope defined, compiler tracks it 
+					nesting level
+					symbol table: gets the names for the scopes
+					outermost scope gets 0, then next ones get a 1 as you enter new scope
+						within a function makes it 2, exit a scope decrement 
+					decipher variable access: 
+					compiler knows the offsets - b = a : < > < >
+						Ex. < 0  > < 1  >
+							b is defined and used at scope 2
+							a used in 2 but last defined in 1 = diff is 1 i.e 1 record away
+						first part of tuple is nesting offset, local = 0, tells you how many static links have to be followed to find that variable in an activiation record
+						2nd part is the local offset of the variable in the record
+						physical address of a on stack + bytes to record = actual location of a
+			Static
+				Precompute where the variable is (only need number of bytes away)
+			Dynamic
+				A dymanic scoped language may not have static links
+				can only determine that the variables weren't called locally (compiler)
+				Follow links to search for where the variable is
+				doesn't find the variable in the stack, it creates the variable locally
+					name is important (i.e spelling)
+					inefficient because of the searching
+					deep chaining - follow chain of dyanamic links deep into stack until find what you want
+				shallow chaining - more efficient, as you encounter variable its placed in a "temp stack" or mini stacks, and push that address
+					if the same named variable is called or defined it pushes the most recent to the stack 
+					now we can search this smaller dictionary. when you pop the function you pop that variable from the "mini stack" 
+		

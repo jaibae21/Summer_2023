@@ -1,0 +1,134 @@
+**Formal Language Design**
+
+3.2 Describe Syntax and Semantics
+	Syntax: grammar rules
+		following syntax rules means it will compile
+	Semantics: meaning of legalling formed sentences
+		semantic rules only apply to good sentences
+		Ex. x = 3;
+	Ambiguity: problem for natural languages. A compiler can't compile a statement in two different ways
+		Ex. There is a bar in the field	//don't want the confusion that comes from 'bar'
+		Ex. Fruit flies like apples	//fruit flies (verb), or the insect 
+	Ways to describe/document syntax and semantics
+		Syntax: 
+			language = set of strings (characters/symbols) from some alphabet
+			tokens (lexeme - lexical element): lowest level symbol breakdown
+				value += 3; 	//first pass breaks code into these tokens (lexical analysis) 
+					tokens: <id> <assignment_op> <literal_int> semicolon
+							value		+=			3				;
+						(attribute)
+			Language Recognizers (syntax analyzier)
+				takes stream of tokens and determines if its legal 
+				used by compiler builder
+			Language Generators
+				takes same grammar and generates legal sentences
+
+	Formal Grammar Discovery 
+		BNF (backus-naur form) - defacto grammar for describing all programming languages
+			Grammar for each type of language
+			(circle drawn, going down each encompasses the other) 
+			Regular -> used by regular expressions
+			Context free -> what programming languages are based off of
+				rules are strict but compile can work with thrm
+				rules: id -> <letter><letter>
+						<letters> -><vector | <vecotr> <letter>
+				backus-naur grammar is a context free grammar used to describe backus-naur
+			Context sensitive -.	 if you have one string (a3) you replace it with (x) which is also a string
+				bad for a formal grammar
+				natural langauge independent
+				Rules/Production
+					Rule:
+						<LHS> -> <RHS>  	// <> non terminal
+						Symbols/Tokens: terminal symbols, without brackets (bold in publications)
+						<assign> -> <id> = <expr>; 	// assignment statement (production) 
+						eventually have to get to all terminal signals, if you don't code is malformed
+						<program> -> *program* <id><compound_statement> . //pascal
+						<compound_statement> (pascal-> has keyword <begin> then statements followed by <end>
+						<tatemen<ts> -> <stmt> | <stmt> | <stmt>
+				generating takes RHS and compares to Left? 
+			Derivations
+				<lhs> -> <rhs> 
+				finding a sequence that generates a sentence
+				rightmost derivation vs leftmost
+					a * b + c 
+					<exA> -> <exA> + C
+						rightmost starts with tokens on the right going left
+						leftmost look for where A can be the first thing 
+						doesn't matter what order end result is the same if the grammar is good
+						
+		Ex. Goal is to start with the rule and get sentence or sentence and get rule
+		<assign> -> <id> = <expr>
+		<id> -> A | B | C 	//terminal symbols
+		<expr> -> <id> + <expr> | <id> * <expr> | <id> | <expr>
+		
+		Leftmost: 
+		A = B + (A + C) 
+		//Start with the rule: 
+			A is incoming token. 
+				<aasign> -> <id> = <expr>
+						-> A = <expr>
+		//Keep going
+						-> A = <id> * <expr>
+						-> A = B * <expr> 
+		ALGOL: used to publish algorithms 
+		
+3.3 Parse Trees
+	Good if you can complete the parse tree with nothing leftover
+	When you "walk" the leaves of a parse tree you should get the expression back
+	Book Example (Fig 3.1 & Ex 3.3 pg 216)
+		original grammar had addition and mulitplication as the same precedence
+		Unambigious version (Ex 3.4)
+	Some semantics are conveyed by the grammar (static semantics) 
+		static: before runtime (read and know what is means), compiler can force 
+			operator precedence and left/right associativity 
+			declare variable before uses (compiler can enforce, grammar can't check or make it a rule)
+	Operator precedence can be represented on BNF
+		Ex Static semantics
+
+	Further (deeper) in the tree is higher precedence 
+	Parse tree is the structure that we add attributes to
+		Attribute grammar: BNF modified
+	Operator associativity
+		Figure 3.4 in book pg 226 
+		left recurision means the left side of the tree gets deeper (the recursion is on the left) which means its dealt with first
+			if you wanted right recursive you would change the rule to <expr> -> <term> + <expr> 
+	* = keywords
+
+	<if stmt> -> if* ( <logic_expr> <stmt> | if (<logic_expr) <stmt> else* <stmt>
+	<stmt> -> <if_stmt>
+		creates circular logic
+		Figure 3.5
+		no differentitation between 1-way and 2-way if which leads to ambiguity
+		C++, Java: else is matched with the nearest unmatched if
+			if with a matching else clause and one without
+		perl uses brackets, forces yo to do compound statements even if one line
+*
+Practice Problem 3.3 #11
+	terminal symbols: a and b
+	if not given a starting rule its the first one written
+*
+
+Parse tress used by compiler and a language recognizer
+	1) lexical analysis
+		stream of characters coming in that are parsed through a list of tokens
+		builds symbol table
+			attribute associated with token so it can look it up 
+	2) syntax verfication and semantic processing 
+		static semantics vs dynamic (runtime) compiler can't enforce
+			static: operator precedence, data type compatibility 
+				symbol table or added to identifier in parse tree
+		semantic functions
+			checks data type compatibility and computes what the overall data type will be
+			ex. limit on num of characters
+3.4 Attribute Grammar
+	BNF + semantic functions + attributes on nonterminal
+		some attributes are inherited
+		synthesized attribute: decl
+								/ \
+							double <ID>
+									|
+									A
+				Any other varaibles would all be double
+	operational and denotational
+		operational: this expr will be translated into this op code and if you can its legal
+		denotational: form of proving that a sentence means this, mathmetical proof

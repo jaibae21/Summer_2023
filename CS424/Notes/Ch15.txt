@@ -1,0 +1,96 @@
+** Ch 15 Functional Programming
+
+Functional Language
+	More popular and designed to model math domain
+		math is fairly absolute, so elimante funcational side effects
+	everything immutable
+	set of primitive functions
+	funcation forms needed to construct new function (composition)
+	function application operation (eval)
+	Structure for data (usually lists)
+	Lisp
+		pure functional beginnings, can't manipulate state of memory
+			pure = no variables
+			didn't have loops
+		later versions are purely funcational
+		MIT/IBM:
+			many dialects that had different scopes and started supporting traditional control structures
+		Scheme is a state in Lisp dialect (subset) has static scope
+		implicit heap dynamic language
+			uses mark and sweep
+		freeform language
+			white spaces ignored
+		cube(y) = y*y*y
+			y is in the real number set
+		can type as you are running but when you close the interpreter it doesn't remember the stuff
+		core eval function: default behavior for lisp and invoked on any list
+			if you want a pure list of just data:
+				(quote (a b c)) or '(a b c)
+		first value of a list:
+			car L
+		Rest of list
+			cdr L
+		eveyrthing but the first element of the first element
+			car L2	//first element
+			cdr (car L2)	//first element
+			//doesn't work work if the first element isn't a list
+		2nd thing
+			car (cdr L) or (cadr L)//prints second thing in list
+		
+		functional composition
+			f(x) = x + 2
+			g(x) = 3 + x
+			h(x) = f(g(x)) = (3+x) + 2
+		
+		data types and structures
+			atoms: a single thing (could be called a scalar)
+			list: (data structure) everything is a list
+				has cell value and a link, relies on heap
+			( A B C D) //if you don't tell it otherwise it reads A as a function passing the others
+			
+		scheme examples
+			( + 3 4) 	//call plus and add them
+			//def may or may not be correct
+			
+			define   (cube y)		//define a function with that prototype. the next list is the instructions. 
+			def (cube y)		//could've put the instructions right after the (cube y)
+				(* y y y)		//what the function should do
+			(+ 5(cube 3)		//add 5 to the cube of 3
+		
+		primitive functions
+			numerical (* y z)
+			scheme: define (hypot a b) (sqrt(+ a*2 b*2))
+			
+		control flow in Lisp
+			(define (fact N) (if (<= N 1) 1 (* N (fact(-N 1))
+				)
+			)
+			// 1 is the 
+			
+		Ex. leap year
+			(define (leap? year)
+				(cond ((zero? (modulo year 400)) #t)
+						(zero? (modulo year 100)) #f)
+						(else (zero? (modulo year 4)))
+				)
+			)
+			//? says it returns true or false
+		
+		data representation
+			list 	car		(list 'a 'b 'c)
+			constant	cdr		(a b c)
+			append			(
+			
+			//dots between things, list was built incorrectly
+			
+	Tail recusion is the equivalent of a loop
+	Lazy evalution
+		evaluate then decide if it needs to evaluate the next thing (similar to short circuit)
+		
+			
+			
+			
+			
+			
+			
+			

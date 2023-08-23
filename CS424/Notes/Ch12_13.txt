@@ -1,0 +1,30 @@
+ADT/OOP
+
+data abstraction
+	record + structure ( type definitons)
+	i.e encapsulation 
+		bundling of things together
+
+ADT
+	took idea of encapsulation
+		data, relationships, operations
+
+Information hiding
+	private vs public vs others (visibility) 
+	
+OOP Features
+	managable division
+	encapsulation + information hiding
+	inheritance
+		C++: multiple inheritance
+			problem:
+		inheritance makes code brittle
+	polymorphism
+		dyanmic binding of a function call
+		
+	c++ vs java
+		programmer do whatever they want vs don't do that
+
+
+inheritance vs interface
+	

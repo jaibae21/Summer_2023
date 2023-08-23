@@ -1,0 +1,76 @@
+synthesized attributes: something you push down the tree. declaration
+
+** IDEs: vs code, goland (jetbrains)
+
+syntax: 25 keywords
+	least specific to most specific, looks backwards
+		var a int
+		type T struct {a, b int}
+	func Abs(x T) float64		function, variable x of type T, returns single float64 value
+		can have more than one value returned. have to have the same number of variables on the other side of the equal
+	
+Naming
+	case of initial letter determines visibility
+	Public scope = upper case first letter
+	hierarchy of scope
+	func(recvr T) funnam()
+		recvr.field1
+		
+	y.funname()	//how you call it, use the recvr name when accessing the fields (the equivalent of using the keyword this)
+	
+Semantics
+	no pointer, no aliasing
+	no implicit numeric type conversions
+		can't copy float into int and lose data, you can by using specific commands
+	performs array bound checking
+	++ and -- are statements not expressions
+		has to be standalone, cant do j = i++
+	assignment is not an expression
+		if(k=m)	//doesn't have a value so it doesn't compile
+	interface but not inheritance and reflection: can tell you what types it belongs to and if you know that you know the methods you can call on it
+	
+Garbage Collection
+	class Dept{
+		arrayList<Person> L= new arrayList();
+		.
+		.
+		}
+	p = new person()
+	p.add()
+	
+	if nothing is refering to the arrayList it will decide that the space can be restored to the heap. 
+	
+	type X struct {
+		a, b, c int
+		buf[256]byte
+	}
+	gives some guidance to the compiler. Allows the entire chunk to go away instead of getting rid of one part and then needing to find the rest
+	
+Interfaces
+	type Hash interface {
+		Write(p []byte) (n int, err error)
+		Sum (b [] byte) []byte
+		Reset()
+		Size() int
+		BlockSize() int
+	}
+	
+	if you implement the interface you can use it anywhere that needs that interface
+		ex. toString interface in Java
+	the equivalent of c++ inheritance, with a little less.
+	inheritance is bad because its more likely to break especially the deeper the inheritance goes
+	
+Errors
+	exception handling requires data structures which can cause complications so instead have error type
+	you can define them similar to exception handling
+	
+Example Code
+	number, _ :=
+		_ : ignoring the error code
+		:= : is because number was not predeclared, whatever the type of assignment is will be the type of variable
+	defer inFile.Close()	//executing before leaving module, useful if program randomly crashes or if you forget to ever close it
+	* is reference to object
+	
+	
+	
+	

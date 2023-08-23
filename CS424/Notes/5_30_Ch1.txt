@@ -1,0 +1,101 @@
+Practice Problems from 12th edition 
+
+(follows slide deck: Chapter 1: Preliminaries)
+*Why we study programming languages
+	1.ex. go to statement vs while loop 
+	2.
+	3. 
+	4.
+	5. 
+	6. add things to languages/make more secure 
+*Language Evaluation
+	- readability and writeability usually conflict and same goes for last two
+	Readability
+		Ease at which you can read language
+			Ex. Cobalt easy to read but hard to write
+			languages that implement exception handling can make it harder or easier
+			robust data typing makes it easy because an X is an X
+		- Characteristics that affect:
+			Simplicity - large number of constructs may be hard to read or write
+				less keywords is better
+				
+		- Orthogonality
+				combine things in any way and its legal
+				small set of language features that can be combined in any way to make new features
+					ex. you can do this except when = not orthogonal 
+						mulitpling characters
+					ex. IBM: adding
+						A reg1, memloc	//memloc add to reg1, has mem delay 
+						AR reg1, reg2	//reg2 added to reg1
+						VAX:
+						ADDL operand1, operand2	//takes whatever operand2 is and add - is orthogonal
+		- Data Types
+				Are they adequate enough
+				dont mix types bc of different sizes
+					prevent mixing for security 
+				timeout = 1 vs timeout = true
+					C++ considered integers all the way
+					Python they are different types can't mix them
+					dependent on how a language treats integers and boolean
+		- Syntax Design
+			C++ and java look similar but dont mean the same thing
+				ex Fortran. 
+					IF(A) = 1 	//if is an array, a is index, 1 gets copied in
+						//A also doesn't have to be an integer
+					IF(A) = A * A  A	//cube of A, not complete in fortran by itself
+					IF(A) do 10 = 1, 10 	// do some logic, is complete in fortran
+						Fortran has no reserved words
+			Form -> meaning
+				x = (a > b)? a:b;
+		- Expressivity also affects....?
+	Writability
+		how easy to express what you want to do in language
+			too simple = too diffucult to express what you want to do 
+		programs that have tons of features for expression = tend to learn a certain subset
+		
+		Characteristics that affect:
+			Simplicity & Orthogonality
+			Expressivity
+	Reliability
+		how well errors or misuse can be detected or handled formerly (i.e does it gives the tools vs you writing in the checks) 
+		Characteristics that affect:
+			type checking
+				handling arrays c++ vs java: c sees an array as an address so setting outside bounds will just put that number somewhere
+				java has runtime type checking and will tell you where and why the program messes up -> means theres more overhead
+				
+			exception handling
+			aliasing
+			Readability & Writability
+	Cost
+		runtime cost
+		memory
+		cost of suppport 
+		learn time
+*Influences on Language Design
+	Architecture
+		Von Neumann -> state transition
+		Fetch/decode/execute -> imperative language control statements
+			telling list of instructions to do in the order they come in
+				C, Java, Fortran, Rust, Julia, Go, Python
+				Logic Languages: decided off pure logic (is sidewalk wet then its wet) takes proof sequence and tries to prove outcome is true (baby AI, doesn't work well with Von Neumann) 
+				Functional Languages: mimic mathmetics
+				Object Oriented: most are imperative
+				No markup langauges in this class: html 
+		memory cells -> variables
+	Design Methodologies
+		structured design -> subprograms
+			early time (70|80s) Pascal and ADA designed for a structured breakdown, i.e hard to use functions in other places. Lots of parameter passing. 
+		90s - started thinking about problems from the data an object needs
+		OOP: Java and C++ most popular, starting to evolve out of it
+*Implementation Methods
+	compiled: executable in that machine's language, can be optimized for that machine
+		Fortran first proof of concept for that
+	interpreted: every statement is on the fly changed to that machine's language. Compiles each line
+	hybrid: Java - takes your code and turns it into byte code which can be taken to any other machine with java interpreter (java virtual machine) and it can compile the byte code
+		Kotlin: google lanugage, can run off the java virtual machine 
+
+Ex: mulitple ways to do things = not simple
+count++: post increment
+++count: pre increment 
+count = count + 1
+count += 1

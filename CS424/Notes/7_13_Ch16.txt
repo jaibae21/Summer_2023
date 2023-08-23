@@ -1,0 +1,74 @@
+** CH 16 Logic Programming
+
+	Imperative
+		what we usually write
+	Functional
+		for math because there are no side effects
+Logic Programming
+	Goal express programs as a form of symbolic logic and use to solve problems
+	declarative
+		you're saying the answer looks like this
+		predicate calculus 
+	
+	collection of facts and rules
+	Predicate Calculus
+		basis for logic programming (formal logic)
+		atoms or symbols
+		propositions
+			atomic (fact)
+				states a fact, immutable
+					some languages allow you to change rules or retract them
+					if they don't allow you to change it, then you have to refresh and reload the program
+						ex. prolog
+							cat(jack).		//thing called jack is cat 
+							cat(bob).		//functor with order 1 because it has one parameter in it
+							parent(paul, beth)		//the only meaning in it is in the comments in reference to how you read it
+							parent(beth, larry)		//have to keep the same way of writing i.e can't put kids on left side (before parents)
+			compound
+				built with other operators
+					negation: not a, not(a)
+					conjuction: a and b; a,b
+					disjunction: a or b; no or in prolog, written as separate rules
+					equivalence: a is eq to b; use = or 'is' (no assignment in prolog)
+					implication: if a then b, a implies b is true; b :- a
+					Ex
+						carnivore(A) :- cat(A)		//universal rule, says for all A if they're cats they're carnivores
+						//Exists comes in the form of or so in prolog you just write out the rules since it doesn't do or
+		Horn Clause: the name of the rule, can't have ands on the left side
+			cat(bob).		//empty horn clause
+			carnivore(C) :- cat(C).		//horn clause with complex rule on other side
+		Theorem Proving done for you, engine behind the language
+		Limitations
+			sort(listold, listnew) c (that c is the logic symbol that looks like that) permutation(listold, listnew), sorted(listnew)
+				//find a permuation and if its sorted then the left hand side is true
+			sorted(listnew) c (if for all j)(listnew[j] <= listnew[j+1])		//how to logically express sorted, handwritten the symbols make sense
+			
+			
+	
+	Prolog Syntax
+		swi - prolog.org - version we'll use, can use online editor, prompts differ from installed vs online
+		prolog doesn't like rules to be separated, such as having a bunch of parent rules, defining other rules and then adding on more parents after that
+		ordering and sorting in prolog uses other functions written in different language like c
+		term: 
+			constant
+				ex. 3
+				atom
+				lowercase
+			variable
+				ex. C
+				captial letter and no type binding as far as static vs dynamic
+				instantiations: used in the binding of a value
+					instantiation not found will make it false
+			structure
+				how we represent lists []
+		fact statements:
+			used to form information about system or database
+			ex. Ancestory
+				parent(paul, beth).
+				parent(mary,paul).
+				parent(blanche, mary).
+				parent(blanche, joe).
+				grandparent(A,B) :- parent(A,Z), parent(Z,B)
+			
+		
+		

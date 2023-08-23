@@ -1,0 +1,129 @@
+** Names, Bindings, and Scopes
+Ch.5 
+	5.2 Names
+		the identifier
+		Rules for names:
+			1) are there reserved words/keywords
+				did the language choose to make them reserved
+				if you have reserved words, what should the limit be
+					writeability 
+			2) Case sensitivty
+				a problem when you don't have to declare variables before use
+			3) Character limit
+	5.3 Variables
+		represents location in memory
+		what are attributes that matter?
+			Name: bound when created
+			Address: loc in memory
+				inside a function: static bound in memory until execution
+					function never called liftetime is 0
+					bound at runtime goes to stack
+			Type: some langauges don't have type (python)
+				fortran - compiler determines type of variable based on how you've used it and then it becomes static
+			Value: can be static bound (constants) location also static bound if global
+				most variables have dynamic value
+			liretime: how long bound to memory
+				stack is more like when the function is running those variables are running
+				heap lifetimes will be separate from the function
+				never allocated to memory = lifetime of 0
+			scope: related to name/variable
+				where is the name accessible (visible) by the code
+					when is that name visible (lexical visibility)
+				C, Java: statically scoped, when you enter a new scope the other variables may not be visible anymore
+						Ex. declaring a variable and then using in two functions is two different scopes
+						locally declared name hides the other one
+					at compile time can tell what version of a variable you're using
+				dynamic scope: you don't know until runtime
+					one closest to you on the stack
+					
+						ex
+							function outer()
+							begin
+								function inner()
+								begin
+									var x = 7
+									inner2()
+								end
+								function inner2()
+								begin
+									var y  = x	//static scope y = 3; dynamic scope y = 7
+								end
+								var x = 3 //part of outer
+								inner()
+							end
+						static scope: which x are we using: diagram it as what creates what 
+							default is local x unless you do something to reference a different one
+							if the variable isn't local then it must be pulling from the local
+						dynamic scope: 
+							look at it as its running
+							it looks at the first outer scope whereas static is almost like a black box
+							*remember when it exits it leaves memory
+							if value doesn't exist it will get created 
+							some languages have ways to make the variable be local instead of having it inherit if its been called before (using counter variables such as i,j,k)
+	Aliasing
+		variable has more than one name bound to it at some time
+		Is it allowed
+			Issue: readability
+				functional side effect: 
+					alias opens the door to it
+					you can alter memory outside of your scope
+					vara is not in the functions memory scope but we can still 
+					alter it (pass by reference)
+				Side effect without aliasing
+					void fa(int *p1, int *p2)
+						(*p1) = (*p1) + 1;
+			Ex code
+				int total = 100;
+				int func1 (int & vara)	//at this point in time the variable has two names
+				{
+					vara = vara + total;
+				}
+				main
+					int value = func1(total);
+
+	5.4 Bindings
+		when is something associated with a variable/name
+		bind a location to a variable (memory cell that variable is associated with)
+			very few languages do it 100%
+			fortran was all static so you needed to know exactly how much memory it needed therefore everything was pass by reference
+				can't have linked lists or recursion
+		static: before program runs (compile/link load)
+			can't change during runtime
+				ex. constant
+					some languages create a memory others take the value given to that name and plugs it into the code
+			exists outside any function
+			some languages have keyword static makes variable exist before function is called or ran
+		dynamic: after program runs/in a function, can change during execution
+			working with references in memory
+			Pros/Cons
+				can cause readability problems bc you don't know what the variable may be at any one point
+				writability: theres a flexibility to it
+				reliability and cost: more flexible something is the less likely an environment can tell you there is a problem
+					a lot of stuff has to be done at runtime which is bad for cost
+		stack dynamic
+			specific amount of space set aside for program
+			allocates temporarily
+			on each return the information for each function "disappears" from the stack. 
+					int f2(int N)
+					begin
+						double values[N]
+					end
+				it will allocated the number of spaces as big as N it doesn't need to know, some languages do this and some don't
+			function/declaration elaboration: pushing a function record onto a stack
+		explicit heap dynamic
+			uses keywords like new and malloc
+					double *values = new double[10]);	//c
+					double[] values = new double[10];	//java
+				new and malloc are created so you can grow and shrink things
+			explicit: using a command to create memory on the heap such as new
+			gives more functionality with more responsibilty
+				need to know when to clean up and what kind of copies needed (deep/shallow)
+				C reminds you to delete, java has a garabage collection it cleans up for you
+				java is more costly for management
+		implicit heap dynamic 
+			python and perl
+					if 
+						a = [1, 2, 3]
+					else
+						a = [0, 0, 0, 0, 0, 0, 0]
+			implicit becasue the memory is allocated when the data is created and there is no keyword

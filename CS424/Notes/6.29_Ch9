@@ -1,0 +1,86 @@
+- 6-29 lecture notes
+    - 1) procedural programming
+    - 2) reuse
+        - lowers cost if code is able to be reused
+    - 
+    - characteristics of subprograms (procedures or functions)
+        - single entry point
+            - calling unit is suspended & flow of control transferred to subprogram's 1st executable statement
+        - control always returns to the calling unit at the next instruction where it left off
+        - most have "names" (IDs)
+            - however, a lot of languages allow anonymous functions defined locally to be used only in that scope
+    - subprogram header
+        - subprogram header→defines the interface to the subprogram
+            - this would include things like the parameter profile (what kinds of parameters? how many?)
+        - type of subprogram
+            - is it a function? is it a subroutine? some languages have both of these
+        - typically called a prototype, but this isn't the header bc header should include the names of the variables
+        - parameter profile→what the user needs to know to use subprogram & what order they go in
+            - formal parameters→term used for discussing parameters in the context of a subprogram
+            - actual parameters→the variables/values put into a calling statement for the subprogram 
+            - many to 1 relationship between actual and formal parameters
+            - positional parameters→the first actual parameter matches to the formal parameter and so on
+                - this tells the compiler exactly which parameters to bind to which
+                - also helps with confirming type matches
+            - keyword parameters (or named parameters)→the parameters are explicitly listed in any order
+                - ex: "call SA(b:3.0, a:Q)"
+                - good for huge lists of parameters bc avoid having to constantly reference the header when writing code to call the subprogram
+    - subprogram body
+        - subprogram body→logic & local variables defined
+    - default parameter values
+        - ex: "SB(color c, bool changeColor = true)"
+            - sets a default for changeColor, so if nothing is in that slot when called, then it is set to the default
+            - any parameter after the first one requiring default will also require a default
+                - one exception is when syntax allows for separation between parameters
+                    - ex: "SB(a, , 7)"
+    - sharing info with subprograms
+        - parameters
+            - question to ask yourself: does the language allow functional side effects?
+                - functional side effect→some variable's memory outside the local scope of the subprogram can be modified 
+                    - ways to get side effects: global variables, pointers, ?
+        - global variables/external scope stuff
+    - design issues for subprograms
+        - are local variables statically or dynamically allocated?
+            - if using a stack, then it's dynamic unless explicitly listed as static
+        - can subprograms be defined inside (nested in) other subprograms?
+        - what parameter passing mechanisms are supported?
+            - 5 possible: (asking which subset of these does this language support?)
+                - pass by value
+                - pass by reference
+                - we'll talk about the rest later
+        - are types of actuals compared to types of formal?
+        - are functional side-effects allowed?
+        - can you pass a subroutine as a parameter?
+        - what kinds of info can be returned by a subprogram? is there more than 1 value/type returned?
+            - Golang allows return of more than 1 type
+        - can you overload subprograms?
+            - can you have more than one version for the same name?
+            - being able to use the same name for multiple definitions support generic programming
+                - generic programming→a function can be written as a template and the type is defined when instantiated
+    - parameter passing mechanisms→dictate how actual parameters are transmitted to the subprogram
+        - 3 semantics of parameter passing→in, out, and in/out 
+        - in/out is usually pass by reference
+    - parameter passing mechanics
+        - pass by value (in)→value of actual is copied to initialize the formal with
+            - sometime called: pass by copy
+            - doesn't have to be a copy
+            - if the passed parameter's value can be changed, then it's pass by value
+        - pass by result (out)→formal parameter is not initialized, formal acts as local, at the end the formal is copied back to actual
+            - you have to give it a starting value
+            - has to know where the actual is in memory, so uses a little more overhead
+            - C# has this
+        - pass by reference (in/out)→the access path (ie address) of actual is stored in the formal (AKA alias)
+        - pass by value-result (in/out)→the actual is copied into the formal, formal then acts as a local variable, then final value is copied back to the actual 
+            - managed by copying
+            - address (access) of actual is also needed
+            - could be a different outcome from pass by reference because of side effects
+        - pass by name (in/out)→the actual's text is substituted for the formal in the body of the subprogram when it runs
+            - very inefficient & very complex to implement
+    - which languages use what?
+        - C, Java: pass by value only
+        - C#/C++: value, reference
+        - Fortran: pass by reference only
+    - implications of choosing different forms of parameter passing
+        - pass by reference: much faster, but direct access to original
+        - pass by value: could be copying a very large value, but protects the original from being changed
+- skip section on co-routines for now 

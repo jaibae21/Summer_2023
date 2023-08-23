@@ -1,0 +1,57 @@
+Practice Problems Ch6
+	statically: declarations are declared at same level as the x
+	sub1 writes out 5 because it wasn't given an x in its declaration
+	dynamic: sub 2 called and creates an x and puts 10 to it. Sub 2 calls sub1 and writes an x, in this case the one that was given 10
+	
+	#4
+	statically: x created in main. then sub 1 declared with an x. sub1 statically declares sub2, and thats the end. On the same level as sub1, sub3 is called. sub3 accesses main x (main::x), sub1 and 2 access sub1's x.
+	dynamic: sub1 called and a x created. Sub1 calls sub2 and sub2 calls sub3
+	sub3, 2, and 1 reference sub1 x
+	
+	
+** Expressions + Assignment Statements
+	Arithmetic Expressions
+		Issues
+			operator precedence rules
+				APL doesn't have: went right to left
+			operator associativity
+				same operator at same level what order
+				hardware has hard time representing real numbers so order does matter
+			order of operand evaluation
+				A + B
+				Matters when A + F(B): some languages would evaluate the function call first because retrieving the operand is more important than just the variable
+					only a real issue when F(B) has a side effect that changes A, such as A is a global variable that the function can change
+			Operator Overloading
+				add types to an operator
+				writiablity feature, can affect readability
+			type mixing (mixed mode expression)
+				Ex
+					int i
+					float x
+					i + x
+				compiler is told to make i a float. I.e compiler has type coercion
+				doesn't have type mixing, then the language is strongly typed and will make you do the converting
+			assignment
+				i = x
+				take an expressions value and copies it to something on the left side
+				type compatibility happening, may have less type coercion
+				problem because now you're trying to actually take up space when the types are different sizes
+	Relational + Boolean Expressions
+		boolean used to build relational expressions
+		Issues
+			boolean its own expression type? 
+				meaning true and false are its only values not integers
+				improves realiability when its its own type
+			short circuit or not
+				designed to make code run faster
+				linked list (C/Java): traversing, while(q!= null && q->value != somevalue) q = q->next
+					short circuits on the expression for the while loop
+					convert to Pascal, it will crash because it doesn't short circuit so it evaluates q!=null and then moves to the next which causes the crash because you're accessing a null
+				means it can stop evaluting sub-expressions
+					x = 0 * (...)
+						short circuit says it stops
+						not short circuit means it will evaluate
+				while(f(A) && f(B))
+					if it short circuits it might not evaluate f(B)
+					if language pulls functions first it may not short circuit
+	Mixed Mode

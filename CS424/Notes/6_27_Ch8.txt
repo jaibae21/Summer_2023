@@ -1,0 +1,135 @@
+** Chapter 8 : Statement Level Control 
+
+	Control Structure: control statement + the collection of statements it controls. Used to build control structures
+		Ex. While, if
+	Need to do more than one thing is a compound statement but still one statement once you collapse it down
+	min # of control requirements for logic
+		able to choose whether or not to execute something
+		able to logically control repetition
+		
+
+**Selection Statements
+	provides means of choosing 1 of mulitple paths of logic
+	1 way if
+		Ex.
+			if condition expression
+				statement1
+	2 way if
+		Adding an else clause
+		
+		rules for logical expression: does it require boolean or does it treat other values as true/false
+		
+		if (n = 1) -> for C, an assignment statement, usually an accident
+		if(count = getCount()) 	//probably not an accident but future languages wanted to prevent this
+		if(n++ > 0) 	//for go would need to check the value separately
+		
+		does white space matter (freeform lanugage)
+			whitespace is removed
+		
+		language can choose to use indentation
+		perl forces you to use brackets
+	n way if
+		different keyword is a clue that they have n way if
+		if it only has 2 way if's youre just doing nested ifs. 
+		python and perl have it
+		if(avg >=90):
+			grade = 'A
+		elif avg>=80:
+			grade = 'B'
+		elif avg >= 70:
+			grade = 'C'
+			
+** Multi selection
+	allows selection of one of any number of statements or statement groups
+	
+		ex
+			if(cat == 1 || cat =2 || cat = 3)
+			else if
+		when switch statement becomes more preferable
+				C								Pascal
+			switch(cat)						case(cat) begin
+			case1:							1,2,3: do something;
+			case2:							20,10,#: do something //can also do ranges
+			case3:	something				else?
+					break					end
+			case20:
+			case10:							Ruby	//selection with a value
+			case#:	something				case
+					break					leap = case
+													when year % 400 == 0 then true
+			default									when year % 100 == 0 then false
+													else year % 4 == 0
+												end
+
+		switch statements looking at discrete values
+			Issue: legal to branch into structure
+				yes: what is the semantics of doing so
+				no: some weird error will be thrown
+		Ruby: last value computed is what it returns
+** Iteration/Repetition
+	how is iteration controlled
+	mulitple entry/exits allowed
+		branching in and out in the middle of a loop
+		if it supposrts continue generally means you can get back to the start
+		
+	Conditional/logic controlled
+		while, repeat until, do while, 
+		for loop
+			has an initilization statement (c, c++, java - no restriction on what that has to be)
+			condition: controls execution of body
+			update statement: 
+			body:
+			// a shorthand conditional while loop that just looks nicer
+	Count controlled
+		adds a way to specify count range start, terminal values of a counting variable (loop control variable)
+			step value
+		Loop control variable: when is the condition evaluated
+			usually evaluated once
+		More semantics to it. C, C++, Java don't have count controlled
+		Ex
+			for(i = 0; i<max;i = i+2)	//c
+			
+			DO I = 0, max-1, 2			//fortran-ish, step left off means assumed 1
+			END
+			print I						//could be undefined, the last value (10), or next value (12)
+			try doing I = I + 3 in the middle of the code	//3 + 2, next value it was suppose to be, cant compile bc not legal, 
+			
+			DO 10 X = 1, 10, 0.1		//can count down or up, or by fractional parts
+			10 Continue
+
+	data structure controlled
+		More like what Python and even Java has today, also perl
+		collection or sequence: generally called foreach loops
+			takes away having to but a counter
+** Branches 
+	Unconditional Branches
+		goto
+			reprecussions of entering in and out of scopes
+		Break is a special branch statement (break out of current control structure)
+		continue: go back to beginning of a repetition control
+	
+** Guarded Command
+	combination of selection and repetition
+	nondeterministic logic: no one specific way to do something. There is randomness involved
+		Ex. Client/Server: server listening for requests. The server doesn't know when and where the requests will come from
+	Created for Communicating sequential process: writing sequential process that periodically gets a message from somewhere else that just so happens to be another program
+	
+		if(cond1) -> stmnt1
+		[] (cond2) -> stmnt2
+			.
+			.
+		[] (cond n) -> stmnt
+		fi
+		//whatever conditions are true at that time, a random true statment is executed, if none true it will crash
+		
+		do
+			[](cond1) -> stmnt1
+			[](cond2) -> stmnt2
+				.
+				.
+			[](cond n) -> stmnt n
+		od
+		//gurded repetition
+		
+		Ada has a form but doesn't have randomness. Rendv, when this task has something for me it stops and send msg
+		
